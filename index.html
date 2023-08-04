@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Web-based Chatbot</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AissitMe2</title> <!-- Add the title here -->
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="chat-container">
+    <div class="chat-header">AissitMe2</div> <!-- Add the title here -->
     <div class="chat-box" id="chatBox"></div>
-    <input type="text" id="userInput" placeholder="Type your message...">
+    <input type="text" id="userInput" placeholder="Type your message here..." disabled> <!-- Disabled until the NLP model is ready -->
     <button onclick="sendMessage()">Send</button>
   </div>
   <script src="script.js"></script>
 </body>
+
 </html>

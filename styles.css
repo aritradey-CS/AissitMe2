@@ -1,0 +1,97 @@
+/* Global styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #59a6e6;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Chat container styles */
+.chat-container {
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  animation: fadeInUp 0.5s ease;
+}
+
+/* Chat header styles */
+.chat-header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+  text-transform:capitalize;
+  margin-bottom: 10px;
+}
+
+/* Chat box styles */
+.chat-box {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: transparent; /* Transparent background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow */
+}
+
+/* Input field styles */
+input[type="text"] {
+  width: 312px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: border-color 0.3s ease;
+  max-width: calc(100% - 50px); /* Set a maximum width to adjust based on content */
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+/* Send button styles */
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for chat messages */
+.chat-box div {
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  animation: fadeIn 0.3s ease;
+}
+
+.user-message {
+  background-color: #cce5ff;
+  text-align: right;
+}
+
+.chatbot-message {
+  background-color: #f2f2f2;
+}
+
+/* Responsive styles */
+@media (max-width: 500px) {
+  /* Adjust the max-width of the chat container for smaller screens */
+  .chat-container {
+    max-width: 90%;
+  }
+}

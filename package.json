@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "spacy": "^0.0.4"
+    "spacy": "^0.0.4",
+    "spacy-nlp": "^1.0.11"
   }
 }
