@@ -4,7 +4,7 @@ let nlp;
 function loadSpacyNlp() {
   const script = document.createElement("script");
   script.src = "https://unpkg.com/spacy-nlp@1.0.0/builds/en_core_web_sm.js";
-  script.onload = initSpacyNlp; // Fix the event handler assignment
+  script.onload = initSpacyNlp;
   document.body.appendChild(script);
 }
 
@@ -80,10 +80,10 @@ async function getChatbotResponse(userInput) {
   // Then, generate appropriate chatbot responses based on the extracted information.
 
   // For this example, we'll assume 'userIntent' represents the user's intention, like 'recommend a movie'
-  const userIntent = "recommend a movie";
+  const userIntent = doc.ents[0].label_;
 
   // Check the user's intent and call the appropriate function
-  if (userIntent === "recommend a movie") {
+  if (userIntent === "recommend_movie") {
     const movieRecommendation = await getMovieRecommendation(userInput);
     appendMessage("Chatbot", movieRecommendation);
   } else {
@@ -94,14 +94,12 @@ async function getChatbotResponse(userInput) {
 // Function to get movie recommendations using the API
 async function getMovieRecommendation(userInput) {
   // The URL endpoint of the movie suggestion API
-  const url = `https://moviesdatabase.p.rapidapi.com/titles/series/${encodeURIComponent(
-    userInput
-  )}`;
+  const apiKey = "842d4a2f338037341134f35512f14bea";
+  const url = `https://api.themoviedb.org/3/movie/550?api_key=${apiKey}`;
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "8b0c0c9052msh8fc8a444731d587p115813jsnae8bd4eea2d3",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+      accept: "application/json",
     },
   };
 
@@ -116,23 +114,11 @@ async function getMovieRecommendation(userInput) {
 
     // Parse the API response
     const data = await response.json();
-
-    // Extract relevant movie information from the API response
-    // For example, if the API returns a list of movie recommendations, you can extract the movie titles.
-    // Note: The exact data structure will depend on the API you are using. Please refer to the API documentation for details.
-
-    // For now, we'll assume the API response contains a list of movie titles in the 'results' array.
-    const results = data.results;
-    if (results.length > 0) {
-      const movieTitles = results.map((movie) => movie.title);
-      return `I recommend these movies: ${movieTitles.join(", ")}`;
-    } else {
-      return "Sorry, I couldn't find any recommendations.";
-    }
   } catch (error) {
     console.error("Error fetching movie data:", error);
     return "Oops! Something went wrong.";
   }
-}
 
-loadSpacyNlp();
+  // Return the movie title and rating
+  return `Movie: ${data.title}, Rating: ${data.vote_average}`;
+}
