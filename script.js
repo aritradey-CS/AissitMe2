@@ -2,25 +2,28 @@
 let nlp;
 
 function loadSpacyNlp() {
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/spacy-nlp@1.0.0/builds/en_core_web_sm.js';
+  const script = document.createElement("script");
+  script.src = "https://unpkg.com/spacy-nlp@1.0.0/builds/en_core_web_sm.js";
   script.onload = initSpacyNlp; // Fix the event handler assignment
   document.body.appendChild(script);
 }
 
 function initSpacyNlp() {
-  spacyNlp.load('en_core_web_sm').then((model) => {
-    nlp = model;
-    // Now that the NLP model is ready, enable the chat input
-    enableChatInput();
-  }).catch((error) => {
-    console.error('Error loading spaCy model:', error);
-  });
+  spacyNlp
+    .load("en_core_web_sm")
+    .then((model) => {
+      nlp = model;
+      // Now that the NLP model is ready, enable the chat input
+      enableChatInput();
+    })
+    .catch((error) => {
+      console.error("Error loading spaCy model:", error);
+    });
 }
 
 function enableChatInput() {
   // Enable the chat input by removing the disabled attribute
-  document.getElementById('userInput').removeAttribute('disabled');
+  document.getElementById("userInput").removeAttribute("disabled");
 }
 
 // The rest of your code remains unchanged
@@ -30,14 +33,12 @@ function enableChatInput() {
 // Function to initialize the chatbox with some initial messages
 function initializeChatbox() {
   const initialMessages = [
-    
     "What can I help you with today?",
     "You can ask me to recommend movies, music, books, or clothes!",
-    
   ];
 
-  initialMessages.forEach(message => {
-    appendMessage('Chatbot', message);
+  initialMessages.forEach((message) => {
+    appendMessage("Chatbot", message);
   });
 
   // Enable the chat input after displaying initial messages
@@ -47,49 +48,28 @@ function initializeChatbox() {
 // ... Rest of the code ...
 
 // When the window has loaded, initialize the chatbox
-window.onload = function() {
+window.onload = function () {
   initializeChatbox();
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function sendMessage() {
-  var userInput = document.getElementById('userInput').value;
-  appendMessage('User', userInput);
+  var userInput = document.getElementById("userInput").value;
+  appendMessage("User", userInput);
   getChatbotResponse(userInput);
 }
 
 function appendMessage(sender, message) {
-  var chatBox = document.getElementById('chatBox');
-  var messageDiv = document.createElement('div');
-  messageDiv.textContent = sender + ': ' + message;
-  messageDiv.className = sender.toLowerCase() + '-message'; // Apply the appropriate class for styling
+  var chatBox = document.getElementById("chatBox");
+  var messageDiv = document.createElement("div");
+  messageDiv.textContent = sender + ": " + message;
+  messageDiv.className = sender.toLowerCase() + "-message"; // Apply the appropriate class for styling
   chatBox.appendChild(messageDiv);
   chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the latest message
 }
 
 async function getChatbotResponse(userInput) {
   if (!nlp) {
-    appendMessage('Chatbot', 'Oops! The chatbot is not ready yet.');
+    appendMessage("Chatbot", "Oops! The chatbot is not ready yet.");
     return;
   }
 
@@ -100,27 +80,29 @@ async function getChatbotResponse(userInput) {
   // Then, generate appropriate chatbot responses based on the extracted information.
 
   // For this example, we'll assume 'userIntent' represents the user's intention, like 'recommend a movie'
-  const userIntent = 'recommend a movie';
+  const userIntent = "recommend a movie";
 
   // Check the user's intent and call the appropriate function
-  if (userIntent === 'recommend a movie') {
+  if (userIntent === "recommend a movie") {
     const movieRecommendation = await getMovieRecommendation(userInput);
-    appendMessage('Chatbot', movieRecommendation);
+    appendMessage("Chatbot", movieRecommendation);
   } else {
-    appendMessage('Chatbot', 'Sorry, I cannot understand your request.');
+    appendMessage("Chatbot", "Sorry, I cannot understand your request.");
   }
 }
 
 // Function to get movie recommendations using the API
 async function getMovieRecommendation(userInput) {
   // The URL endpoint of the movie suggestion API
-  const url = `https://moviesdatabase.p.rapidapi.com/titles/series/${encodeURIComponent(userInput)}`;
+  const url = `https://moviesdatabase.p.rapidapi.com/titles/series/${encodeURIComponent(
+    userInput
+  )}`;
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'X-RapidAPI-Key': '8b0c0c9052msh8fc8a444731d587p115813jsnae8bd4eea2d3',
-      'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
-    }
+      "X-RapidAPI-Key": "8b0c0c9052msh8fc8a444731d587p115813jsnae8bd4eea2d3",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
   };
 
   try {
@@ -129,7 +111,7 @@ async function getMovieRecommendation(userInput) {
 
     // Check if the API request was successful
     if (!response.ok) {
-      throw new Error('Request failed');
+      throw new Error("Request failed");
     }
 
     // Parse the API response
@@ -142,14 +124,14 @@ async function getMovieRecommendation(userInput) {
     // For now, we'll assume the API response contains a list of movie titles in the 'results' array.
     const results = data.results;
     if (results.length > 0) {
-      const movieTitles = results.map(movie => movie.title);
-      return `I recommend these movies: ${movieTitles.join(', ')}`;
+      const movieTitles = results.map((movie) => movie.title);
+      return `I recommend these movies: ${movieTitles.join(", ")}`;
     } else {
-      return 'Sorry, I couldn\'t find any recommendations.';
+      return "Sorry, I couldn't find any recommendations.";
     }
   } catch (error) {
-    console.error('Error fetching movie data:', error);
-    return 'Oops! Something went wrong.';
+    console.error("Error fetching movie data:", error);
+    return "Oops! Something went wrong.";
   }
 }
 
